@@ -140,19 +140,144 @@ footer .big { font-family: var(--display); font-style: italic; font-size: 36px; 
 footer p { color: var(--glass); margin-top: 8px; }
 .seabed { display: block; width: 100%; height: 70px; background: var(--deep); }
 
+
+/* ---------- VIDA MARINA ---------- */
+.layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; container-type: size; }
+section, footer { position: relative; overflow: hidden; }
+section > .wrap, footer > .wrap { position: relative; z-index: 1; }
+.sw { position: absolute; left: 0; top: var(--y); width: var(--w); animation: swim var(--d) linear var(--dl) infinite; will-change: transform; }
+.sw.rtl { animation-name: swimR; }
+.sw svg { display: block; width: 100%; height: auto; overflow: visible; }
+@keyframes swim { from { transform: translateX(calc(-1 * var(--w) - 20px)); } to { transform: translateX(calc(100cqw + 20px)); } }
+@keyframes swimR { from { transform: translateX(calc(100cqw + 20px)) scaleX(-1); } to { transform: translateX(calc(-1 * var(--w) - 20px)) scaleX(-1); } }
+.wig { animation: wig 1.6s ease-in-out infinite alternate; transform-origin: 40% 50%; }
+@keyframes wig { from { transform: translateY(-5px) rotate(-4deg); } to { transform: translateY(5px) rotate(4deg); } }
+.flap { animation: flap .7s ease-in-out infinite alternate; transform-origin: 50% 70%; }
+@keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(.35) translateY(3px); } }
+.slow { animation: wig 3.4s ease-in-out infinite alternate; }
+.jelly { position: absolute; width: var(--w); top: var(--y); left: var(--x); animation: jelly 7s ease-in-out var(--dl, 0s) infinite; }
+.jelly svg { display: block; width: 100%; height: auto; animation: pulseJ 1.8s ease-in-out infinite; transform-origin: 50% 30%; }
+@keyframes jelly { 0%,100% { transform: translate(0, 0) rotate(-4deg); } 50% { transform: translate(14px, -46px) rotate(5deg); } }
+@keyframes pulseJ { 0%,100% { transform: scale(1, 1); } 50% { transform: scale(1.08, .9); } }
+.crab { position: absolute; bottom: 10px; left: 0; width: 70px; animation: crab 16s ease-in-out infinite alternate; }
+.crab svg { display: block; width: 100%; animation: scuttle .28s ease-in-out infinite alternate; }
+@keyframes crab { from { transform: translateX(8px); } to { transform: translateX(calc(100cqw - 78px)); } }
+@keyframes scuttle { from { transform: rotate(-4deg) translateY(0); } to { transform: rotate(4deg) translateY(-3px); } }
+.hang { position: absolute; width: var(--w); top: var(--y); left: var(--x); right: var(--r); }
+.hang svg { display: block; width: 100%; height: auto; }
+.spin svg { animation: spin 14s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.bobv svg { animation: bobv 3.2s ease-in-out infinite alternate; }
+@keyframes bobv { from { transform: translateY(-8px) rotate(-6deg); } to { transform: translateY(8px) rotate(6deg); } }
+.caustic { position: absolute; inset: -20%; opacity: .5;
+  background: radial-gradient(60px 40px at 20% 30%, rgba(143,207,207,.35), transparent 70%), radial-gradient(90px 50px at 70% 60%, rgba(143,207,207,.3), transparent 70%), radial-gradient(70px 40px at 40% 85%, rgba(143,207,207,.28), transparent 70%), radial-gradient(80px 60px at 85% 15%, rgba(143,207,207,.3), transparent 70%);
+  background-size: 340px 300px; animation: caustic 18s linear infinite; }
+@keyframes caustic { to { background-position: 340px 300px; } }
+.rsvp .caustic { opacity: .35; }
+
+/* olas entre secciones */
+.sep { display: block; width: 100%; height: 46px; margin: 0; position: relative; z-index: 2; overflow: hidden; }
+.sep svg { display: block; width: 200%; height: 100%; animation: sep 14s linear infinite; }
+@keyframes sep { to { transform: translateX(-50%); } }
+
+/* héroe: gaviotas, nubes, delfín, chorro, destellos */
+.hero .layer { z-index: 1; }
+.cloud { position: absolute; top: var(--y); left: 0; width: var(--w); height: calc(var(--w) * .32); border-radius: 999px; background: rgba(255,250,240,.75); filter: blur(1px); animation: swim var(--d) linear var(--dl) infinite; }
+.cloud::before, .cloud::after { content: ""; position: absolute; border-radius: 50%; background: inherit; }
+.cloud::before { width: 46%; height: 140%; left: 16%; bottom: 20%; }
+.cloud::after { width: 34%; height: 110%; left: 52%; bottom: 25%; }
+.dolphin { position: absolute; left: 14%; bottom: 46px; width: 92px; animation: djump 9s ease-in-out 2s infinite; opacity: 0; }
+.dolphin svg { display: block; width: 100%; }
+@keyframes djump {
+  0%, 58% { transform: translate(0, 70px) rotate(-38deg); opacity: 0; }
+  62% { opacity: 1; }
+  70% { transform: translate(60px, -54px) rotate(-12deg); }
+  78% { transform: translate(120px, -66px) rotate(14deg); }
+  88% { transform: translate(180px, 10px) rotate(44deg); opacity: 1; }
+  92%, 100% { transform: translate(196px, 70px) rotate(50deg); opacity: 0; } }
+.whale .spout { transform-box: fill-box; transform-origin: 50% 100%; animation: spout 3.2s ease-out infinite; }
+@keyframes spout { 0%, 45% { transform: scale(.2, 0); opacity: 0; } 60% { transform: scale(1.1, 1.15); opacity: 1; } 85% { transform: scale(1.2, 1); opacity: .9; } 100% { transform: scale(1.3, .9); opacity: 0; } }
+.spark { position: absolute; width: 10px; height: 10px; left: var(--x); top: var(--y); background: #fff; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twinkle 2.6s ease-in-out var(--dl) infinite; opacity: 0; }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.3) rotate(0); } 50% { opacity: .9; transform: scale(1) rotate(45deg); } }
+.hero h1 { text-shadow: 0 2px 0 rgba(255,255,255,.35); }
+
+/* ---------- VIAJE DEL BARCO ---------- */
+.count { padding-block: 40px 48px; }
+.count h2 { margin-bottom: 6px; }
+.count .sub { text-align: center; color: var(--glass); margin: 0 0 18px; font-size: 16px; }
+.voyage { position: relative; aspect-ratio: 4 / 3.3; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.08);
+  background: linear-gradient(180deg, #f3a77f 0%, #f8c99a 26%, #fde7c6 40%); container-type: size; }
+.vsun { position: absolute; left: 22%; top: 40%; width: 26%; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #fff6dd 0 40%, #ffd79a 58%, rgba(255,215,154,0) 72%); }
+.vsea { position: absolute; left: 0; right: 0; top: 40%; bottom: 0; background: linear-gradient(180deg, #4aa2b3 0%, #237188 35%, #0f3f55 100%); }
+.vsea::before { content: ""; position: absolute; inset: 0; opacity: .5;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,.0) 0 7px, rgba(255,255,255,.16) 7px 8px); mask: linear-gradient(180deg, #000, transparent 70%); animation: shimmer 6s linear infinite; }
+@keyframes shimmer { to { background-position: 0 48px; } }
+.glow { position: absolute; left: 22%; top: 40%; width: 18%; height: 30%; transform: translateX(-50%); background: linear-gradient(180deg, rgba(255,240,205,.8), rgba(255,240,205,0)); filter: blur(4px); }
+.vwave { position: absolute; left: 0; width: 200%; animation: sep 9s linear infinite; }
+.vwave.mid { top: 55%; height: 12%; opacity: .5; animation-duration: 14s; }
+.vwave.front { bottom: -2%; height: 20%; z-index: 4; }
+.isle { position: absolute; left: -2%; bottom: 10%; width: 30%; z-index: 2; }
+.isle svg { display: block; width: 100%; }
+.beam { transform-box: fill-box; transform-origin: 0% 50%; animation: beam 4s ease-in-out infinite; }
+@keyframes beam { 0%, 100% { opacity: .15; transform: rotate(-10deg); } 50% { opacity: .7; transform: rotate(10deg); } }
+.boat { --e: .2; position: absolute; left: calc(72% - 22% * var(--e)); top: calc(40.5% + 46% * var(--e)); width: 44%; z-index: 3; padding: 0; border: 0; background: none; cursor: pointer;
+  transform: translate(-50%, -86%) scale(calc(.14 + .86 * var(--e))); transform-origin: 50% 86%; -webkit-tap-highlight-color: transparent; }
+.boat:focus-visible { outline: none; }
+.boat:focus-visible .bobber { filter: drop-shadow(0 0 6px #fff); }
+.bobber { display: block; animation: boatbob 3.2s ease-in-out infinite; transform-origin: 50% 85%; }
+.bobber svg { display: block; width: 100%; height: auto; overflow: visible; }
+@keyframes boatbob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-4%) rotate(3deg); } }
+.boat.toot .bobber { animation: toot .7s cubic-bezier(.2,.8,.2,1), boatbob 3.2s ease-in-out .7s infinite; }
+@keyframes toot { 0% { transform: translateY(0) scale(1); } 30% { transform: translateY(-14%) scale(1.06, .95); } 60% { transform: translateY(0) scale(.97, 1.04); } 100% { transform: none; } }
+.flag { transform-box: fill-box; transform-origin: 0 50%; animation: flag .9s ease-in-out infinite alternate; }
+@keyframes flag { from { transform: skewY(-6deg) scaleX(.9); } to { transform: skewY(5deg) scaleX(1.05); } }
+.puff { position: absolute; left: 50%; top: 8%; z-index: 5; transform: translate(-50%, 6px) scale(.9); background: #fff; color: var(--deep); font: 600 15px var(--body); padding: 8px 14px; border-radius: 999px; box-shadow: 0 8px 18px rgba(0,0,0,.2); opacity: 0; transition: opacity .25s, transform .35s cubic-bezier(.2,.8,.2,1); white-space: nowrap; }
+.puff.on { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.vgull { position: absolute; top: var(--y); left: 0; width: var(--w); color: rgba(12,52,70,.65); animation: swim var(--d) linear var(--dl) infinite; }
+.vgull svg { display: block; width: 100%; }
+.trip { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; margin-top: 18px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--glass); font-weight: 600; }
+.bar { position: relative; height: 6px; border-radius: 99px; background: rgba(143,207,207,.22); }
+.bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--glass), #ffd79a); transition: width .8s cubic-bezier(.2,.8,.2,1); }
+.bar i::after { content: ""; position: absolute; right: -7px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: #ffd79a; box-shadow: 0 0 0 4px rgba(255,215,154,.25); }
+.tripTxt { text-align: center; margin: 12px 0 22px; color: var(--foam); font-family: var(--display); font-style: italic; font-size: 19px; }
+.count .btns { margin-top: 22px; }
+
+
+footer { padding-bottom: 0; }
+footer > .wrap { padding-bottom: 20px; }
+.seabed2 { position: relative; z-index: 0; display: block; width: 100%; height: auto; max-height: 180px; margin-top: 10px; }
+.weed { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 4.2s ease-in-out infinite alternate; }
+.weed.d2 { animation-duration: 3.4s; animation-delay: -1s; }
+.weed.d3 { animation-duration: 5s; animation-delay: -2s; }
+@keyframes sway { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+.hang.bobv { z-index: 0; }
+
 @media (max-width: 380px) { .btns.two { grid-template-columns: 1fr; } .clock b { font-size: 30px; } }
-@media (prefers-reduced-motion: reduce) { .whale, .pin-pulse, .map .pin { animation: none; } .btn { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .whale, .pin-pulse, .map .pin { animation: none; } .btn { transition: none; } .layer *, .voyage *, .sep svg, .dolphin, .spark { animation-play-state: paused !important; } }
 </style>
 
 <header class="hero">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="s-fish" viewBox="0 0 64 40"><path d="M3 20 18 7v26z" fill="currentColor" opacity=".8"/><ellipse cx="38" cy="20" rx="22" ry="14" fill="currentColor"/><path d="M29 8q7 12 0 24" stroke="#fff" stroke-width="3" fill="none" opacity=".5"/><path d="M36 6q6-6 12 0" fill="currentColor" opacity=".8"/><circle cx="50" cy="16" r="3.4" fill="#0c3446"/><circle cx="51" cy="15" r="1.1" fill="#fff"/><path d="M56 24q-3 3-6 1" stroke="#0c3446" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="s-turtle" viewBox="0 0 110 70"><g fill="#97cc8c"><ellipse cx="74" cy="56" rx="14" ry="6" transform="rotate(30 74 56)"/><ellipse cx="30" cy="56" rx="11" ry="5" transform="rotate(-30 30 56)"/><ellipse cx="74" cy="14" rx="14" ry="6" transform="rotate(-30 74 14)"/><ellipse cx="30" cy="16" rx="11" ry="5" transform="rotate(30 30 16)"/><circle cx="93" cy="33" r="11"/></g><ellipse cx="52" cy="35" rx="33" ry="23" fill="#4f8f5c"/><ellipse cx="52" cy="35" rx="25" ry="16" fill="#6aaa6e"/><path d="M52 19v32M30 35h44M38 24l28 22M66 24 38 46" stroke="#4f8f5c" stroke-width="2.5" opacity=".7"/><circle cx="97" cy="30" r="2.6" fill="#0c3446"/><path d="M95 37q3 2 6 0" stroke="#0c3446" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="91" cy="36" rx="3" ry="1.6" fill="#f2a08c" opacity=".8"/></symbol>
+  <symbol id="s-jelly" viewBox="0 0 60 90"><g fill="none" stroke="#d6a2df" stroke-width="3" stroke-linecap="round" opacity=".85"><path d="M14 40q-4 12 2 22t0 22"/><path d="M24 42q4 12-2 22t2 20"/><path d="M36 42q-4 12 2 22t-2 20"/><path d="M46 40q4 12-2 22t2 22"/></g><path d="M4 40C4 18 16 6 30 6s26 12 26 34c-6 4-14 2-18 0-4 3-12 3-16 0-4 2-12 4-18 0z" fill="#ecc6f0"/><path d="M14 22c4-8 10-10 16-10" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/><circle cx="23" cy="28" r="2.4" fill="#0c3446"/><circle cx="37" cy="28" r="2.4" fill="#0c3446"/><path d="M27 33q3 3 6 0" stroke="#0c3446" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="32" rx="3" ry="1.6" fill="#f2a08c" opacity=".7"/><ellipse cx="42" cy="32" rx="3" ry="1.6" fill="#f2a08c" opacity=".7"/></symbol>
+  <symbol id="s-crab" viewBox="0 0 90 60"><g stroke="#d65f47" stroke-width="4" stroke-linecap="round" fill="none"><path d="M24 40l-12 8M24 46l-10 10M66 40l12 8M66 46l10 10M28 30 16 24M62 30l12-6M38 24v-8M52 24v-8"/></g><path d="M5 17a9 9 0 1 1 14 8l-4-7z" fill="#e8735a"/><path d="M85 17a9 9 0 1 0-14 8l4-7z" fill="#e8735a"/><ellipse cx="45" cy="36" rx="24" ry="15" fill="#e8735a"/><circle cx="38" cy="14" r="5" fill="#fff"/><circle cx="52" cy="14" r="5" fill="#fff"/><circle cx="39" cy="15" r="2.4" fill="#0c3446"/><circle cx="51" cy="15" r="2.4" fill="#0c3446"/><path d="M39 40q6 5 12 0" stroke="#0c3446" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="37" rx="3.4" ry="1.8" fill="#f6b3a3"/><ellipse cx="58" cy="37" rx="3.4" ry="1.8" fill="#f6b3a3"/></symbol>
+  <symbol id="s-seahorse" viewBox="0 0 56 96"><path d="M24 10c11 0 17 6 17 12 0 4-3 6-8 6h-4c4 6 6 12 4 20-2 10-12 14-12 22 0 6 6 8 10 6 3-2 2-6-1-6" fill="none" stroke="#f2a65a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 20h10" stroke="#f2a65a" stroke-width="6" stroke-linecap="round"/><path d="M15 34 6 39l9 6z" fill="#f7c27e"/><path d="M19 6l3 5 4-6 2 6" stroke="#f7c27e" stroke-width="3" fill="none" stroke-linejoin="round"/><circle cx="29" cy="17" r="2.6" fill="#0c3446"/><ellipse cx="25" cy="24" rx="3" ry="1.6" fill="#e06d52" opacity=".5"/></symbol>
+  <symbol id="s-octo" viewBox="0 0 100 92"><g fill="none" stroke="#ee8f7c" stroke-width="9" stroke-linecap="round"><path d="M30 50c-10 10-20 14-24 26"/><path d="M40 56c-4 12-12 18-10 30"/><path d="M50 58c0 12 4 18 0 28"/><path d="M60 56c4 12 12 18 10 30"/><path d="M70 50c10 10 20 14 24 26"/></g><ellipse cx="50" cy="34" rx="30" ry="27" fill="#f19a8a"/><path d="M34 18c6-6 14-8 22-6" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".55"/><circle cx="40" cy="36" r="3.4" fill="#0c3446"/><circle cx="60" cy="36" r="3.4" fill="#0c3446"/><path d="M44 45q6 5 12 0" stroke="#0c3446" stroke-width="2.4" fill="none" stroke-linecap="round"/><ellipse cx="33" cy="44" rx="4.4" ry="2.2" fill="#e06d52" opacity=".5"/><ellipse cx="67" cy="44" rx="4.4" ry="2.2" fill="#e06d52" opacity=".5"/></symbol>
+  <symbol id="s-star" viewBox="-44 -44 88 88"><path d="M0-40 11-12h29L17 6l9 28L0 17l-26 17 9-28-23-18h29z" fill="#f4a261" stroke="#e08a45" stroke-width="3" stroke-linejoin="round"/><circle cx="-7" cy="-2" r="2.8" fill="#0c3446"/><circle cx="7" cy="-2" r="2.8" fill="#0c3446"/><path d="M-5 6q5 4 10 0" stroke="#0c3446" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="s-gull" viewBox="0 0 40 16"><path d="M2 13Q10 2 20 10Q30 2 38 13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="s-dolphin" viewBox="0 0 120 60"><path d="M6 36c10-18 34-28 62-26 18 1 32 8 42 16l8 2-8 4c-8 6-22 10-40 10-14 0-28-2-38-6L16 46l2-14z" fill="#6fa9c4"/><path d="M58 12l8-10 6 12z" fill="#5b97b3"/><path d="M40 40c14 6 34 6 52 2-12 8-30 10-46 6z" fill="#e8f3f6"/><path d="M58 40l-4 12 12-8z" fill="#5b97b3"/><circle cx="96" cy="23" r="2.6" fill="#0c3446"/><path d="M104 30q4 2 8 0" stroke="#0c3446" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="94" cy="30" rx="3" ry="1.5" fill="#f2a08c" opacity=".7"/></symbol>
+</svg>
   <div class="sun" aria-hidden="true"></div>
   <canvas id="bubbles" aria-hidden="true"></canvas>
+  <div class="layer" aria-hidden="true"><div class="cloud" style="--y:9%;--w:120px;--d:70s;--dl:-20s"></div><div class="cloud" style="--y:20%;--w:80px;--d:95s;--dl:-60s;opacity:.7"></div><div class="sw" style="--y:7%;--w:34px;--d:26s;--dl:-4s;color:#36586a;"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div><div class="sw" style="--y:11%;--w:24px;--d:26s;--dl:-6s;color:#36586a;"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div><div class="sw rtl" style="--y:15%;--w:28px;--d:34s;--dl:-20s;color:#36586a;"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div><span class="spark" style="--x:18%;--y:62%;--dl:0s"></span><span class="spark" style="--x:78%;--y:58%;--dl:-1s"></span><span class="spark" style="--x:60%;--y:70%;--dl:-1.8s"></span><span class="spark" style="--x:34%;--y:76%;--dl:-.6s"></span><div class="sw" style="--y:78%;--w:40px;--d:16s;--dl:-3s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:84%;--w:28px;--d:19s;--dl:-11s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
   <div class="wrap">
     <p class="lead">Baby shower de</p>
     <h1>Eduardo Alfonso</h1>
     <p class="surname">Alarcón Bolados</p>
     <svg class="whale" viewBox="0 0 240 150" aria-hidden="true">
-      <g fill="none" stroke="#eef6f3" stroke-width="4" stroke-linecap="round"><path d="M92 38c-2-14-10-22-22-26"/><path d="M92 38c0-14 0-22-2-30"/><path d="M92 38c3-14 10-21 22-24"/></g>
+      <g class="spout" fill="none" stroke="#eef6f3" stroke-width="4" stroke-linecap="round"><path d="M92 38c-2-14-10-22-22-26"/><path d="M92 38c0-14 0-22-2-30"/><path d="M92 38c3-14 10-21 22-24"/></g>
       <path d="M22 92c0-38 36-56 80-54 46 2 74 24 82 54 4 16-10 30-40 34-36 5-84 4-104-6C28 116 22 104 22 92z" fill="#4f9cbc"/>
       <path d="M30 104c18 16 62 22 104 18 24-2 42-8 48-22-6 22-30 30-64 32-40 2-74-8-88-28z" fill="#eef6f3"/>
       <path d="M180 86c18-16 30-30 44-28-6 12-8 22 0 36-16 4-30-2-44-8z" fill="#3c86a6"/>
@@ -164,23 +289,64 @@ footer p { color: var(--glass); margin-top: 8px; }
     <p class="msg">Viene en camino un pequeño marinero. Queremos celebrar su llegada contigo.</p>
     <div class="when"><span class="chip">Sáb 9 de enero 2027</span><span class="chip">16:30 hrs</span><span class="chip">La Ligua</span></div>
   </div>
+  <div class="dolphin" style=""><svg class="x" viewBox="0 0 120 60"><use href="#s-dolphin"/></svg></div>
   <canvas id="waves" aria-hidden="true"></canvas>
 </header>
 
-<section class="count" aria-live="polite">
+<section class="count" aria-labelledby="countH">
   <div class="wrap">
-    <h2>Faltan para conocernos</h2>
-    <div class="clock" id="clock">
+    <h2 id="countH">El barco de Eduardo ya zarpó</h2>
+    <p class="sub">Cada día se acerca un poco más a la costa</p>
+    <div class="voyage" id="voyage">
+      <div class="vsun" aria-hidden="true"></div>
+      <div class="vsea" aria-hidden="true"></div>
+      <div class="glow" aria-hidden="true"></div>
+      <div class="vgull" style="--y:12%;--w:22px;--d:22s;--dl:-3s"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div>
+      <div class="vgull" style="--y:18%;--w:16px;--d:22s;--dl:-5s"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div>
+      <svg class="vwave mid" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22C100 4 200 4 300 22S500 40 600 22 800 4 900 22 1100 40 1200 22V60H0z" fill="rgba(255,255,255,.35)"/></svg>
+      <div class="isle"><svg viewBox="0 0 160 170" aria-hidden="true">
+  <path class="beam" d="M84 34 160 12v44z" fill="#fff6d6"/>
+  <path d="M0 170c4-26 18-40 40-44 22-4 30-18 52-16 26 2 40 20 46 60z" fill="#1d4d5e"/>
+  <path d="M8 170c6-18 16-28 34-30 18-2 28-14 46-12 20 2 32 16 36 42z" fill="#2a6273"/>
+  <path d="M70 128 76 46h16l6 82z" fill="#fffdf6"/>
+  <path d="M72 106h24l1 12H71zM74 78h20l1 12H73zM75 52h18l1 12H74z" fill="#e06d52"/>
+  <rect x="72" y="30" width="24" height="16" rx="3" fill="#ffe7a3"/>
+  <path d="M68 30l16-14 16 14z" fill="#0c3446"/>
+</svg></div>
+      <button class="boat" id="boat" type="button" aria-label="Tocar la bocina del barco de Eduardo"><span class="bobber"><svg viewBox="0 0 200 170" aria-hidden="true">
+  <path d="M100 18v104" stroke="#7a4b35" stroke-width="5" stroke-linecap="round"/>
+  <path class="flag" d="M102 14l30 9-30 9z" fill="#8fcfcf"/>
+  <path d="M104 26c30 20 44 50 48 88h-48z" fill="#fffdf6"/>
+  <path d="M104 26c30 20 44 50 48 88" fill="none" stroke="#e7dccb" stroke-width="2"/>
+  <path d="M96 38C74 58 62 84 58 114h38z" fill="#f4e9d6"/>
+  <path d="M124 70a12 12 0 1 1-1 0" fill="none"/>
+  <circle cx="126" cy="80" r="10" fill="#eef6f3"/><path d="M121 80q5 5 10 0" stroke="#4f9cbc" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M18 118h164l-20 34H40z" fill="#e06d52"/>
+  <path d="M24 128h154" stroke="#fffdf6" stroke-width="5"/>
+  <text x="100" y="146" text-anchor="middle" font-family="Figtree, system-ui, sans-serif" font-weight="700" font-size="13" letter-spacing="3" fill="#fffdf6">EDUARDO</text>
+  <ellipse cx="100" cy="156" rx="96" ry="7" fill="#fff" opacity=".35"/>
+</svg></span></button>
+      <svg class="vwave front" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22C100 4 200 4 300 22S500 40 600 22 800 4 900 22 1100 40 1200 22V60H0z" fill="#0f3f55"/></svg>
+      <div class="puff" id="puff" aria-live="polite">¡Tuuu tuuu!</div>
+    </div>
+    <div class="trip" aria-hidden="true"><span>Mar adentro</span><div class="bar"><i id="tripbar"></i></div><span>La Ligua</span></div>
+    <p class="tripTxt" id="tripTxt">El barco viene en camino</p>
+    <div class="clock" id="clock" aria-live="off">
       <div><b id="d">—</b><span>días</span></div>
       <div><b id="h">—</b><span>horas</span></div>
       <div><b id="m">—</b><span>min</span></div>
       <div><b id="s">—</b><span>seg</span></div>
     </div>
     <p class="done" id="done" hidden>¡Hoy es el día! Te esperamos.</p>
+    <div class="btns"><button class="btn ghost light" id="arrive" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      Ver cómo llega el barco</button></div>
   </div>
 </section>
 
+<div class="sep" style="background:var(--foam)" aria-hidden="true"><svg viewBox="0 0 2400 46" preserveAspectRatio="none"><path d="M0 0H2400V18C2300 34 2200 34 2100 20S1900 2 1800 18 1600 34 1500 20 1300 2 1200 18 1000 34 900 20 700 2 600 18 400 34 300 20 100 2 0 18z" fill="var(--deep)"/></svg></div>
 <section>
+  <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="sw rtl" style="--y:8%;--w:34px;--d:18s;--dl:-2s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:13%;--w:26px;--d:18s;--dl:-2.8s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:5%;--w:22px;--d:18s;--dl:-3.4s;color:#f28b6b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="jelly" style="--w:46px;--y:44%;--x:82%"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div><div class="sw" style="--y:88%;--w:40px;--d:24s;--dl:-14s;color:#4f9cbc;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
   <div class="wrap">
     <h2>Cuándo</h2>
     <div class="facts">
@@ -203,6 +369,7 @@ footer p { color: var(--glass); margin-top: 8px; }
 </section>
 
 <section style="padding-top:8px">
+  <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="sw rtl" style="--y:3%;--w:86px;--d:34s;--dl:-8s;"><svg class="slow" viewBox="0 0 110 70"><use href="#s-turtle"/></svg></div><div class="hang bobv" style="--w:34px;--y:40%;--x:2%"><svg class="wig" viewBox="0 0 56 96"><use href="#s-seahorse"/></svg></div><div class="jelly" style="--w:34px;--y:66%;--x:86%;--dl:-3s"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div><div class="sw" style="--y:92%;--w:30px;--d:15s;--dl:-5s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw" style="--y:95%;--w:24px;--d:15s;--dl:-6s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
   <div class="wrap">
     <h2>Dónde</h2>
     <p class="muted">Sector Quebrada del Pobre, al norte de La Ligua. Toca Google Maps o Waze y tu celular te guía hasta la puerta.</p>
@@ -238,7 +405,9 @@ footer p { color: var(--glass); margin-top: 8px; }
   </div>
 </section>
 
+<div class="sep" style="background:var(--sand)" aria-hidden="true"><svg viewBox="0 0 2400 46" preserveAspectRatio="none"><path d="M0 0H2400V18C2300 34 2200 34 2100 20S1900 2 1800 18 1600 34 1500 20 1300 2 1200 18 1000 34 900 20 700 2 600 18 400 34 300 20 100 2 0 18z" fill="var(--foam)"/></svg></div>
 <section class="rsvp">
+  <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="hang spin" style="--w:40px;--y:4%;--r:6%;--x:auto"><svg class="wig" viewBox="-44 -44 88 88"><use href="#s-star"/></svg></div><div class="sw rtl" style="--y:22%;--w:30px;--d:20s;--dl:-9s;color:#4f9cbc;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="crab" style=""><svg class="wig" viewBox="0 0 90 60"><use href="#s-crab"/></svg></div></div>
   <div class="wrap">
     <h2>¿Nos acompañas?</h2>
     <p class="muted">Confirma en un minuto: se abre WhatsApp con tu mensaje listo para enviar a los papás.</p>
@@ -268,7 +437,9 @@ footer p { color: var(--glass); margin-top: 8px; }
   </div>
 </section>
 
+<div class="sep" style="background:var(--deep)" aria-hidden="true"><svg viewBox="0 0 2400 46" preserveAspectRatio="none"><path d="M0 0H2400V18C2300 34 2200 34 2100 20S1900 2 1800 18 1600 34 1500 20 1300 2 1200 18 1000 34 900 20 700 2 600 18 400 34 300 20 100 2 0 18z" fill="var(--sand)"/></svg></div>
 <footer>
+  <div class="layer" aria-hidden="true"><div class="sw" style="--y:18%;--w:34px;--d:20s;--dl:-4s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:30%;--w:24px;--d:26s;--dl:-15s;color:#8fcfcf;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="hang bobv" style="--w:78px;--y:auto;--x:auto;--r:9%;bottom:44px"><svg class="wig" viewBox="0 0 100 92"><use href="#s-octo"/></svg></div><div class="jelly" style="--w:30px;--y:8%;--x:8%;--dl:-2s"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div></div>
   <div class="wrap">
     <p class="big">¡Te esperamos!</p>
     <p>Con cariño, la familia Alarcón Bolados</p>
@@ -280,6 +451,19 @@ footer p { color: var(--glass); margin-top: 8px; }
     </div>
     <p class="toast light" id="toast2" role="status"></p>
   </div>
+  <svg class="seabed2" viewBox="0 0 600 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+  <g fill="none" stroke-linecap="round">
+    <path class="weed" d="M40 140C30 110 56 96 44 70S56 30 48 10" stroke="#2f9e7a" stroke-width="10"/>
+    <path class="weed d2" d="M64 140C74 118 54 100 66 80S58 52 70 36" stroke="#3fb88d" stroke-width="8"/>
+    <path class="weed d3" d="M548 140C560 112 534 96 548 70S536 34 550 14" stroke="#2f9e7a" stroke-width="10"/>
+    <path class="weed" d="M520 140C512 120 530 104 520 86" stroke="#3fb88d" stroke-width="8"/>
+    <path class="weed d2" d="M300 140C292 124 310 112 302 96" stroke="#3fb88d" stroke-width="6"/>
+  </g>
+  <path d="M0 116C90 100 170 124 260 114S440 100 600 118V140H0z" fill="#e9d3a6"/>
+  <path d="M0 128C120 118 220 136 330 126S500 118 600 130V140H0z" fill="#d9bd88"/>
+  <g transform="translate(170 118)"><path d="M-16 6C-16-10 16-10 16 6Z" fill="#ffe1d1" stroke="#e9b8a2" stroke-width="2"/><path d="M0 6V-6M0 6-8-4M0 6 8-4" stroke="#e9b8a2" stroke-width="2"/></g>
+  <g transform="translate(430 122) rotate(-14) scale(.32)"><use href="#s-star" x="-44" y="-44" width="88" height="88"/></g>
+</svg>
 </footer>
 
 <script>
@@ -302,7 +486,54 @@ footer p { color: var(--glass); margin-top: 8px; }
     const m = Math.floor(ms / 6e4); ms -= m * 6e4;
     $("d").textContent = d; $("h").textContent = pad(h); $("m").textContent = pad(m); $("s").textContent = pad(Math.floor(ms / 1000));
   }
-  tick(); setInterval(tick, 1000);
+  /* ===== Viaje del barco ===== */
+  const START = Date.UTC(2026, 10, 15, 12); // zarpó el 15 nov 2026
+  const boat = $("boat"), bar = $("tripbar"), tripTxt = $("tripTxt");
+  let demo = false;
+  const clamp = v => Math.max(0, Math.min(1, v));
+  const ease = p => Math.pow(p, 1.25);
+  function setBoat(p, label) {
+    boat.style.setProperty("--e", ease(p).toFixed(4));
+    bar.style.width = (p * 100).toFixed(1) + "%";
+    if (label !== undefined) tripTxt.textContent = label;
+  }
+  function realTrip() {
+    const p = clamp((Date.now() - START) / (EVENT - START));
+    const pct = Math.round(p * 100);
+    setBoat(p, p >= 1 ? "¡El barco llegó! Hoy es el día" : `Lleva recorrido el ${pct}% del viaje hasta La Ligua`);
+    return p;
+  }
+  function tickAll() { tick(); if (!demo) realTrip(); }
+  tickAll(); setInterval(tickAll, 1000);
+
+  let puffT;
+  boat.addEventListener("click", () => {
+    boat.classList.remove("toot"); void boat.offsetWidth; boat.classList.add("toot");
+    $("puff").classList.add("on"); clearTimeout(puffT);
+    puffT = setTimeout(() => $("puff").classList.remove("on"), 1600);
+  });
+
+  $("arrive").addEventListener("click", () => {
+    if (demo) return;
+    demo = true;
+    const from = realTrip();
+    const run = (a, b, ms, label, done) => {
+      if (reduce) { setBoat(b, label); return setTimeout(done, 600); }
+      const t0 = performance.now();
+      const step = now => {
+        const k = Math.min(1, (now - t0) / ms);
+        const s = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        setBoat(a + (b - a) * s, label);
+        k < 1 ? requestAnimationFrame(step) : done();
+      };
+      requestAnimationFrame(step);
+    };
+    run(from, 1, 3200, "Así llegará el 9 de enero…", () => {
+      tripTxt.textContent = "¡Llegó a La Ligua! Te esperamos";
+      boat.click();
+      setTimeout(() => run(1, from, 1400, "Volviendo a su posición de hoy", () => { demo = false; realTrip(); }), 2200);
+    });
+  });
 
   /* ===== Copiar ubicación ===== */
   $("copyLoc").addEventListener("click", () => {
