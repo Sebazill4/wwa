@@ -253,8 +253,43 @@ footer > .wrap { padding-bottom: 20px; }
 @keyframes sway { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
 .hang.bobv { z-index: 0; }
 
+/* ---------- ARTE: bitácora ilustrada ---------- */
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .2  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.ring { display: block; width: 74px; height: 74px; margin: 0 auto 10px; filter: drop-shadow(0 6px 8px rgba(12,52,70,.25)); animation: ringSwing 5s ease-in-out infinite; transform-origin: 50% 0; }
+@keyframes ringSwing { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+.pod { display: block; width: 300px; max-width: 86%; margin: 34px auto 0; overflow: visible; filter: drop-shadow(0 12px 16px rgba(8,40,55,.35)); }
+.pod .mom { animation: bob 5.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+.pod .baby > * { animation: babybob 3.6s ease-in-out infinite; transform-box: view-box; }
+@keyframes babybob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+.pod .spout { transform-box: fill-box; transform-origin: 50% 100%; animation: spout 3.2s ease-out infinite; }
+.pod .spout.s2 { animation-delay: -1.4s; }
+.rays { position: absolute; inset: 30% 0 0 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.rays i { position: absolute; top: -10%; width: 16%; height: 120%; background: linear-gradient(180deg, rgba(255,250,230,.28), rgba(255,250,230,0) 80%); transform-origin: 50% 0; animation: ray 9s ease-in-out infinite alternate; }
+.rays i:nth-child(1) { left: 8%; transform: rotate(14deg); }
+.rays i:nth-child(2) { left: 34%; width: 10%; transform: rotate(8deg); animation-delay: -3s; }
+.rays i:nth-child(3) { left: 58%; transform: rotate(4deg); animation-delay: -5s; }
+.rays i:nth-child(4) { left: 82%; width: 9%; transform: rotate(-4deg); animation-delay: -7s; }
+@keyframes ray { from { opacity: .4; } to { opacity: 1; } }
+.hero .lead { letter-spacing: .01em; }
+.hero h1 { background: none; }
+.hero .surname::before, .hero .surname::after { content: ""; display: inline-block; width: 26px; height: 1.5px; background: currentColor; vertical-align: middle; margin: 0 12px; opacity: .6; }
+h2::after { content: ""; display: block; width: 72px; height: 12px; margin-top: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 12'%3E%3Cpath d='M2 6q8-8 17 0t17 0 17 0 17 0' fill='none' stroke='%23e06d52' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat; }
+.count h2::after { margin-inline: auto; }
+.facts { border-top: 0; gap: 12px; }
+.fact { background: rgba(255,255,255,.7); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; box-shadow: 0 6px 16px rgba(12,52,70,.06); }
+.chart { padding: 8px; border-radius: 26px; background: repeating-linear-gradient(45deg, #d9b98a 0 5px, #b98f5b 5px 10px); box-shadow: 0 16px 34px rgba(12,52,70,.22); }
+.chart .map { border-radius: 18px 18px 0 0; }
+.chart .coords { border-radius: 0 0 18px 18px; border-top: 0; }
+.rsvp-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.bottle { width: 62px; flex: none; margin-top: -10px; animation: bottle 4.6s ease-in-out infinite; transform-origin: 50% 70%; filter: drop-shadow(0 8px 10px rgba(12,52,70,.18)); }
+@keyframes bottle { 0%,100% { transform: rotate(-12deg) translateY(0); } 50% { transform: rotate(10deg) translateY(-8px); } }
+#rsvp { background: rgba(255,250,242,.75); border: 1px solid #e3d0ad; border-radius: 22px; padding: 6px 18px 20px; box-shadow: 0 10px 24px rgba(120,90,40,.08); }
+.saved { min-height: 20px; margin: 10px 0 0; text-align: center; font-size: 14px; color: var(--sea); font-weight: 600; }
+
 @media (max-width: 380px) { .btns.two { grid-template-columns: 1fr; } .clock b { font-size: 30px; } }
-@media (prefers-reduced-motion: reduce) { .whale, .pin-pulse, .map .pin { animation: none; } .btn { transition: none; } .layer *, .voyage *, .sep svg, .dolphin, .spark { animation-play-state: paused !important; } }
+@media (prefers-reduced-motion: reduce) { .ring, .pod *, .rays i, .bottle, .whale, .pin-pulse, .map .pin { animation: none; } .btn { transition: none; } .layer *, .voyage *, .sep svg, .dolphin, .spark { animation-play-state: paused !important; } }
 </style>
 
 <header class="hero">
@@ -270,14 +305,22 @@ footer > .wrap { padding-bottom: 20px; }
   <symbol id="s-dolphin" viewBox="0 0 120 60"><path d="M6 36c10-18 34-28 62-26 18 1 32 8 42 16l8 2-8 4c-8 6-22 10-40 10-14 0-28-2-38-6L16 46l2-14z" fill="#6fa9c4"/><path d="M58 12l8-10 6 12z" fill="#5b97b3"/><path d="M40 40c14 6 34 6 52 2-12 8-30 10-46 6z" fill="#e8f3f6"/><path d="M58 40l-4 12 12-8z" fill="#5b97b3"/><circle cx="96" cy="23" r="2.6" fill="#0c3446"/><path d="M104 30q4 2 8 0" stroke="#0c3446" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="94" cy="30" rx="3" ry="1.5" fill="#f2a08c" opacity=".7"/></symbol>
 </svg>
   <div class="sun" aria-hidden="true"></div>
+  <div class="rays" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <canvas id="bubbles" aria-hidden="true"></canvas>
   <div class="layer" aria-hidden="true"><div class="cloud" style="--y:9%;--w:120px;--d:70s;--dl:-20s"></div><div class="cloud" style="--y:20%;--w:80px;--d:95s;--dl:-60s;opacity:.7"></div><div class="sw" style="--y:7%;--w:34px;--d:26s;--dl:-4s;color:#36586a;"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div><div class="sw" style="--y:11%;--w:24px;--d:26s;--dl:-6s;color:#36586a;"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div><div class="sw rtl" style="--y:15%;--w:28px;--d:34s;--dl:-20s;color:#36586a;"><svg class="flap" viewBox="0 0 40 16"><use href="#s-gull"/></svg></div><span class="spark" style="--x:18%;--y:62%;--dl:0s"></span><span class="spark" style="--x:78%;--y:58%;--dl:-1s"></span><span class="spark" style="--x:60%;--y:70%;--dl:-1.8s"></span><span class="spark" style="--x:34%;--y:76%;--dl:-.6s"></span><div class="sw" style="--y:78%;--w:40px;--d:16s;--dl:-3s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:84%;--w:28px;--d:19s;--dl:-11s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
   <div class="wrap">
+    <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#fffdf6" stroke-width="18"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#e06d52" stroke-width="18" stroke-dasharray="29.8 29.8" transform="rotate(-22 50 50)"/>
+      <circle cx="50" cy="50" r="47" fill="none" stroke="#c9a26b" stroke-width="2.5" stroke-dasharray="4 4"/>
+      <circle cx="50" cy="50" r="29" fill="none" stroke="#c9a26b" stroke-width="2" stroke-dasharray="3 4"/>
+      <text x="50" y="62" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="600" font-size="34" fill="#0c3446">E</text>
+    </svg>
     <p class="lead">Baby shower de</p>
     <h1>Eduardo Alfonso</h1>
     <p class="surname">Alarcón Bolados</p>
-    <svg class="whale" viewBox="0 0 240 150" aria-hidden="true">
-      <g class="spout" fill="none" stroke="#eef6f3" stroke-width="4" stroke-linecap="round"><path d="M92 38c-2-14-10-22-22-26"/><path d="M92 38c0-14 0-22-2-30"/><path d="M92 38c3-14 10-21 22-24"/></g>
+    <svg class="pod" viewBox="0 0 330 200" aria-hidden="true">
+      <g class="mom"><g class="spout" fill="none" stroke="#eef6f3" stroke-width="4" stroke-linecap="round"><path d="M92 38c-2-14-10-22-22-26"/><path d="M92 38c0-14 0-22-2-30"/><path d="M92 38c3-14 10-21 22-24"/></g>
       <path d="M22 92c0-38 36-56 80-54 46 2 74 24 82 54 4 16-10 30-40 34-36 5-84 4-104-6C28 116 22 104 22 92z" fill="#4f9cbc"/>
       <path d="M30 104c18 16 62 22 104 18 24-2 42-8 48-22-6 22-30 30-64 32-40 2-74-8-88-28z" fill="#eef6f3"/>
       <path d="M180 86c18-16 30-30 44-28-6 12-8 22 0 36-16 4-30-2-44-8z" fill="#3c86a6"/>
@@ -285,6 +328,20 @@ footer > .wrap { padding-bottom: 20px; }
       <ellipse cx="50" cy="96" rx="9" ry="4.5" fill="#f2a08c" opacity=".75"/>
       <path d="M38 102q10 7 22 2" stroke="#0c3446" stroke-width="3" fill="none" stroke-linecap="round"/>
       <path d="M100 116q16 24 40 12-16-3-22-18z" fill="#3c86a6"/>
+      </g>
+      <g class="baby" transform="translate(14 104) scale(.5)">
+        <g class="spout s2" fill="none" stroke="#eef6f3" stroke-width="6" stroke-linecap="round"><path d="M92 38c0-14 0-20-2-26"/></g>
+        <path d="M22 92c0-38 36-56 80-54 46 2 74 24 82 54 4 16-10 30-40 34-36 5-84 4-104-6C28 116 22 104 22 92z" fill="#7cc0d8"/>
+      <path d="M30 104c18 16 62 22 104 18 24-2 42-8 48-22-6 22-30 30-64 32-40 2-74-8-88-28z" fill="#eef6f3"/>
+      <path d="M180 86c18-16 30-30 44-28-6 12-8 22 0 36-16 4-30-2-44-8z" fill="#5aa8c6"/>
+      <circle cx="58" cy="82" r="5.5" fill="#0c3446"/><circle cx="56.5" cy="80" r="1.8" fill="#fff"/>
+      <ellipse cx="50" cy="96" rx="9" ry="4.5" fill="#f2a08c" opacity=".75"/>
+      <path d="M38 102q10 7 22 2" stroke="#0c3446" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M100 116q16 24 40 12-16-3-22-18z" fill="#5aa8c6"/>
+        <path d="M70 44c4-18 40-18 46 0z" fill="#fffdf6" stroke="#0c3446" stroke-width="3"/>
+        <path d="M64 46h58" stroke="#1d6b80" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="93" cy="24" r="6" fill="#e06d52"/>
+      </g>
     </svg>
     <p class="msg">Viene en camino un pequeño marinero. Queremos celebrar su llegada contigo.</p>
     <div class="when"><span class="chip">Sáb 9 de enero 2027</span><span class="chip">16:30 hrs</span><span class="chip">La Ligua</span></div>
@@ -409,7 +466,14 @@ footer > .wrap { padding-bottom: 20px; }
 <section class="rsvp">
   <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="hang spin" style="--w:40px;--y:4%;--r:6%;--x:auto"><svg class="wig" viewBox="-44 -44 88 88"><use href="#s-star"/></svg></div><div class="sw rtl" style="--y:22%;--w:30px;--d:20s;--dl:-9s;color:#4f9cbc;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="crab" style=""><svg class="wig" viewBox="0 0 90 60"><use href="#s-crab"/></svg></div></div>
   <div class="wrap">
-    <h2>¿Nos acompañas?</h2>
+    <div class="rsvp-head"><h2>¿Nos acompañas?</h2><svg class="bottle" viewBox="0 0 80 120" aria-hidden="true">
+        <rect x="31" y="4" width="18" height="14" rx="3" fill="#b88f5a"/>
+        <path d="M33 18h14v14c12 6 18 16 18 30v40c0 9-7 14-16 14H31c-9 0-16-5-16-14V62c0-14 6-24 18-30z" fill="#bfe3df" opacity=".85" stroke="#8fcfcf" stroke-width="2.5"/>
+        <rect x="26" y="56" width="28" height="40" rx="4" fill="#fffaf2" transform="rotate(-8 40 76)"/>
+        <path d="M31 66h16M31 74h18M31 82h12" stroke="#c9a26b" stroke-width="2.4" stroke-linecap="round" transform="rotate(-8 40 76)"/>
+        <path d="M44 86c-2-4-8-3-8 1 0 4 8 8 8 8s8-4 8-8c0-4-6-5-8-1z" fill="#e06d52" transform="rotate(-8 40 76)"/>
+        <path d="M24 46c-3 8-4 20-2 30" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+      </svg></div>
     <p class="muted">Confirma en un minuto: se abre WhatsApp con tu mensaje listo para enviar a los papás.</p>
     <form id="rsvp" novalidate>
       <label for="nombre">Tu nombre</label>
@@ -469,7 +533,8 @@ footer > .wrap { padding-bottom: 20px; }
 <script>
 (() => {
   /* ===== Configuración ===== */
-  const WHATSAPP = "56956090294"; // número de quien recibe las confirmaciones, formato 569XXXXXXXX. Vacío: WhatsApp pide elegir el contacto.
+  const WHATSAPP = "56956090294";
+  const SHEET_URL = ""; // URL /exec de la aplicación web de Apps Script (lista de invitados en Google Sheets) // número de quien recibe las confirmaciones, formato 569XXXXXXXX. Vacío: WhatsApp pide elegir el contacto.
   const MAP_URL = "https://maps.app.goo.gl/LpxUBd4CbfwvxkX87";
   const EVENT = Date.UTC(2027, 0, 9, 19, 30); // 9 ene 2027 16:30 hora de Chile (UTC−3)
 
@@ -578,6 +643,12 @@ footer > .wrap { padding-bottom: 20px; }
   $("nombre").addEventListener("input", update);
   document.querySelectorAll("input[name=asist]").forEach(r => r.addEventListener("change", update));
   $("rsvp").addEventListener("submit", e => e.preventDefault());
+  $("wa").addEventListener("click", () => {
+    if (!SHEET_URL) return;
+    const asiste = document.querySelector("input[name=asist]:checked").value;
+    const body = JSON.stringify({ nombre: $("nombre").value.trim(), asiste, personas: asiste === "si" ? n : 0 });
+    try { fetch(SHEET_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {}); } catch (e) {}
+  });
   update();
 
   /* ===== Olas y burbujas ===== */
