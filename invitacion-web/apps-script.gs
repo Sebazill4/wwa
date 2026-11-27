@@ -2,7 +2,7 @@
  * Recibe las confirmaciones de la invitación web y las guarda en la pestaña "Invitados"
  * (columnas: Fecha de respuesta, Nombre, Apellido, ¿Asiste?, Personas, Notas).
  * Si la misma persona confirma de nuevo (mismo nombre y apellido), se actualiza su fila.
- * La columna Notas nunca se toca: es para que anotes lo que quieras.
+ * Si el invitado escribe un mensaje en la botella, se guarda en la columna Notas.
  */
 const HOJA = 'Invitados';
 
@@ -31,6 +31,8 @@ function doPost(e) {
     }
     if (!destino) destino = ultima + 1;
     hoja.getRange(destino, 1, 1, fila.length).setValues([fila]);
+    const nota = String(d.nota || '').trim().slice(0, 300);
+    if (nota) hoja.getRange(destino, 6).setValue(nota);
     return ContentService.createTextOutput('ok');
   } finally {
     lock.releaseLock();
