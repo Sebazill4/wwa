@@ -332,7 +332,10 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
 .bigbottle.corked #cork { transform: none; }
 .bigbottle.filled, .bigbottle.corked { animation: none; }
 #send { width: 100%; }
-#send:disabled { opacity: .85; cursor: default; transform: none; }
+#send.busy { opacity: .85; pointer-events: none; }
+.hint { margin: 10px 0 0; text-align: center; font-size: 14px; color: var(--ink-soft); }
+.hang.puffer svg { animation: puffUp 4.5s ease-in-out infinite; transform-origin: 50% 50%; }
+@keyframes puffUp { 0%, 55%, 100% { transform: scale(1) rotate(0); } 65% { transform: scale(1.3) rotate(-6deg); } 85% { transform: scale(1.3) rotate(6deg); } }
 .sea-strip { position: relative; height: 74px; margin: 18px -20px 0; overflow: hidden; }
 .sea-strip svg { position: absolute; left: 0; bottom: 0; width: 200%; height: 100%; animation: sep 10s linear infinite; }
 .splash { position: absolute; top: 34%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; border: 3px solid #fff; opacity: 0; pointer-events: none; }
@@ -351,11 +354,11 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
 
 <header class="hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="s-fish" viewBox="0 0 64 40"><path d="M3 20 18 7v26z" fill="currentColor" opacity=".8"/><ellipse cx="38" cy="20" rx="22" ry="14" fill="currentColor"/><path d="M29 8q7 12 0 24" stroke="#fff" stroke-width="3" fill="none" opacity=".5"/><path d="M36 6q6-6 12 0" fill="currentColor" opacity=".8"/><circle cx="50" cy="16" r="3.4" fill="#0c3446"/><circle cx="51" cy="15" r="1.1" fill="#fff"/><path d="M56 24q-3 3-6 1" stroke="#0c3446" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="s-fish" viewBox="0 0 64 40"><path d="M17 20 3 8q5 12 0 24z" fill="currentColor"/><path d="M28 9q8-9 18 0" fill="currentColor" opacity=".85"/><ellipse cx="38" cy="20" rx="22" ry="13.5" fill="currentColor"/><path d="M18 22q20 13 40 0-6 10-20 10t-20-10z" fill="#fff" opacity=".4"/><path d="M27 8q6 12 0 24" stroke="#fff" stroke-width="3.6" fill="none" opacity=".65"/><path d="M37 22q5 6-1 10-3-5 1-10z" fill="#0c3446" opacity=".12"/><circle cx="50" cy="16.5" r="4.4" fill="#fff"/><circle cx="51" cy="17" r="2.6" fill="#0c3446"/><circle cx="50.2" cy="15.8" r=".9" fill="#fff"/><path d="M56 24q-3 3-6 1" stroke="#0c3446" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
   <symbol id="s-turtle" viewBox="0 0 110 70"><g fill="#97cc8c"><ellipse cx="74" cy="56" rx="14" ry="6" transform="rotate(30 74 56)"/><ellipse cx="30" cy="56" rx="11" ry="5" transform="rotate(-30 30 56)"/><ellipse cx="74" cy="14" rx="14" ry="6" transform="rotate(-30 74 14)"/><ellipse cx="30" cy="16" rx="11" ry="5" transform="rotate(30 30 16)"/><circle cx="93" cy="33" r="11"/></g><ellipse cx="52" cy="35" rx="33" ry="23" fill="#4f8f5c"/><ellipse cx="52" cy="35" rx="25" ry="16" fill="#6aaa6e"/><path d="M52 19v32M30 35h44M38 24l28 22M66 24 38 46" stroke="#4f8f5c" stroke-width="2.5" opacity=".7"/><circle cx="97" cy="30" r="2.6" fill="#0c3446"/><path d="M95 37q3 2 6 0" stroke="#0c3446" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="91" cy="36" rx="3" ry="1.6" fill="#f2a08c" opacity=".8"/></symbol>
   <symbol id="s-jelly" viewBox="0 0 60 90"><g fill="none" stroke="#d6a2df" stroke-width="3" stroke-linecap="round" opacity=".85"><path d="M14 40q-4 12 2 22t0 22"/><path d="M24 42q4 12-2 22t2 20"/><path d="M36 42q-4 12 2 22t-2 20"/><path d="M46 40q4 12-2 22t2 22"/></g><path d="M4 40C4 18 16 6 30 6s26 12 26 34c-6 4-14 2-18 0-4 3-12 3-16 0-4 2-12 4-18 0z" fill="#ecc6f0"/><path d="M14 22c4-8 10-10 16-10" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/><circle cx="23" cy="28" r="2.4" fill="#0c3446"/><circle cx="37" cy="28" r="2.4" fill="#0c3446"/><path d="M27 33q3 3 6 0" stroke="#0c3446" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="32" rx="3" ry="1.6" fill="#f2a08c" opacity=".7"/><ellipse cx="42" cy="32" rx="3" ry="1.6" fill="#f2a08c" opacity=".7"/></symbol>
   <symbol id="s-crab" viewBox="0 0 90 60"><g stroke="#d65f47" stroke-width="4" stroke-linecap="round" fill="none"><path d="M24 40l-12 8M24 46l-10 10M66 40l12 8M66 46l10 10M28 30 16 24M62 30l12-6M38 24v-8M52 24v-8"/></g><path d="M5 17a9 9 0 1 1 14 8l-4-7z" fill="#e8735a"/><path d="M85 17a9 9 0 1 0-14 8l4-7z" fill="#e8735a"/><ellipse cx="45" cy="36" rx="24" ry="15" fill="#e8735a"/><circle cx="38" cy="14" r="5" fill="#fff"/><circle cx="52" cy="14" r="5" fill="#fff"/><circle cx="39" cy="15" r="2.4" fill="#0c3446"/><circle cx="51" cy="15" r="2.4" fill="#0c3446"/><path d="M39 40q6 5 12 0" stroke="#0c3446" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="37" rx="3.4" ry="1.8" fill="#f6b3a3"/><ellipse cx="58" cy="37" rx="3.4" ry="1.8" fill="#f6b3a3"/></symbol>
-  <symbol id="s-seahorse" viewBox="0 0 56 96"><path d="M24 10c11 0 17 6 17 12 0 4-3 6-8 6h-4c4 6 6 12 4 20-2 10-12 14-12 22 0 6 6 8 10 6 3-2 2-6-1-6" fill="none" stroke="#f2a65a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 20h10" stroke="#f2a65a" stroke-width="6" stroke-linecap="round"/><path d="M15 34 6 39l9 6z" fill="#f7c27e"/><path d="M19 6l3 5 4-6 2 6" stroke="#f7c27e" stroke-width="3" fill="none" stroke-linejoin="round"/><circle cx="29" cy="17" r="2.6" fill="#0c3446"/><ellipse cx="25" cy="24" rx="3" ry="1.6" fill="#e06d52" opacity=".5"/></symbol>
+  <symbol id="s-puffer" viewBox="-4 -4 84 72"><g stroke="#d99a2b" stroke-width="2.8" stroke-linecap="round"><path d="M17.3 24.5L10.7 22.1"/><path d="M24.5 14.7L20.1 9.1"/><path d="M35.7 10.1L35.0 3.2"/><path d="M47.6 12.2L50.7 5.9"/><path d="M56.7 20.3L62.6 16.6"/><path d="M60.0 32.0L67.0 32.0"/><path d="M56.7 43.7L62.6 47.4"/><path d="M47.6 51.8L50.7 58.1"/><path d="M35.7 53.9L35.0 60.8"/><path d="M24.5 49.3L20.1 54.9"/><path d="M17.3 39.5L10.7 41.9"/></g><path d="M16 32 2 20q5 12 0 24z" fill="#f4b942"/><circle cx="38" cy="32" r="22" fill="#ffd36b"/><path d="M20 40q18 16 38 0q-6 13-19 13t-19-13z" fill="#fff4cf"/><g fill="#e9a93a"><circle cx="28" cy="19" r="2.4"/><circle cx="22" cy="29" r="2"/><circle cx="35" cy="14" r="1.8"/><circle cx="30" cy="27" r="1.6"/></g><path d="M32 36q-8 6-4 12 6-2 8-8z" fill="#f4b942"/><circle cx="48" cy="25" r="6.4" fill="#fff"/><circle cx="49.5" cy="26" r="3.6" fill="#0c3446"/><circle cx="48.4" cy="24.6" r="1.2" fill="#fff"/><ellipse cx="51" cy="36" rx="4.2" ry="2.2" fill="#f2a08c" opacity=".8"/><circle cx="60.5" cy="32" r="2.6" fill="none" stroke="#c4553c" stroke-width="2"/></symbol>
   <symbol id="s-octo" viewBox="0 0 100 92"><g fill="none" stroke="#ee8f7c" stroke-width="9" stroke-linecap="round"><path d="M30 50c-10 10-20 14-24 26"/><path d="M40 56c-4 12-12 18-10 30"/><path d="M50 58c0 12 4 18 0 28"/><path d="M60 56c4 12 12 18 10 30"/><path d="M70 50c10 10 20 14 24 26"/></g><ellipse cx="50" cy="34" rx="30" ry="27" fill="#f19a8a"/><path d="M34 18c6-6 14-8 22-6" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".55"/><circle cx="40" cy="36" r="3.4" fill="#0c3446"/><circle cx="60" cy="36" r="3.4" fill="#0c3446"/><path d="M44 45q6 5 12 0" stroke="#0c3446" stroke-width="2.4" fill="none" stroke-linecap="round"/><ellipse cx="33" cy="44" rx="4.4" ry="2.2" fill="#e06d52" opacity=".5"/><ellipse cx="67" cy="44" rx="4.4" ry="2.2" fill="#e06d52" opacity=".5"/></symbol>
   <symbol id="s-star" viewBox="-44 -44 88 88"><path d="M0-40 11-12h29L17 6l9 28L0 17l-26 17 9-28-23-18h29z" fill="#f4a261" stroke="#e08a45" stroke-width="3" stroke-linejoin="round"/><circle cx="-7" cy="-2" r="2.8" fill="#0c3446"/><circle cx="7" cy="-2" r="2.8" fill="#0c3446"/><path d="M-5 6q5 4 10 0" stroke="#0c3446" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
   <symbol id="s-gull" viewBox="0 0 40 16"><path d="M2 13Q10 2 20 10Q30 2 38 13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -384,9 +387,12 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
 <path d="M180 86c18-16 30-30 44-28-6 12-8 22 0 36-16 4-30-2-44-8z" fill="#31789a"/>
 <path d="M100 116q16 24 40 12-16-3-22-18z" fill="#31789a"/>
 <ellipse cx="50" cy="96" rx="9" ry="4.5" fill="#f2a08c" opacity=".75"/>
-<path d="M38 102q10 7 22 2" stroke="#0c3446" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="58" cy="82" r="5.5" fill="#0c3446"/><circle cx="56.5" cy="80" r="1.8" fill="#fff"/><g fill="rgba(255,255,255,.28)" stroke="#0c3446" stroke-width="3.4">
-<circle cx="60" cy="81" r="12.5"/><circle cx="31" cy="85" r="10"/></g>
-<path d="M47.5 80q-3-4-7.5 0M72 78l20-5" stroke="#0c3446" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+<path d="M38 102q10 7 22 2" stroke="#0c3446" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="58" cy="82" r="5.5" fill="#0c3446"/><circle cx="56.5" cy="80" r="1.8" fill="#fff"/><g class="glasses" stroke="#0c3446" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M69 77 96 70l3 4" fill="none"/>
+<ellipse cx="33" cy="82" rx="4.5" ry="9" fill="rgba(255,255,255,.35)"/>
+<path d="M46.5 79q-4-4-9-1" fill="none"/>
+<circle cx="58" cy="81" r="11" fill="rgba(255,255,255,.3)"/></g>
+<path d="M51 75q4-4 9-3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".9"/>
       </g></g></g>
       <g class="ent ent-r"><g class="bobB"><g transform="translate(268 22) scale(.9)">
         <g class="spout s3" fill="none" stroke="#eef6f3" stroke-width="4" stroke-linecap="round"><path d="M92 38c-2-14-10-22-22-26"/><path d="M92 38c0-14 0-22-2-30"/><path d="M92 38c3-14 10-21 22-24"/></g>
@@ -472,7 +478,7 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
 
 <div class="sep" style="background:var(--foam)" aria-hidden="true"><svg viewBox="0 0 2400 46" preserveAspectRatio="none"><path d="M0 0H2400V18C2300 34 2200 34 2100 20S1900 2 1800 18 1600 34 1500 20 1300 2 1200 18 1000 34 900 20 700 2 600 18 400 34 300 20 100 2 0 18z" fill="var(--deep)"/></svg></div>
 <section>
-  <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="sw rtl" style="--y:8%;--w:34px;--d:18s;--dl:-2s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:13%;--w:26px;--d:18s;--dl:-2.8s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:5%;--w:22px;--d:18s;--dl:-3.4s;color:#f28b6b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="jelly" style="--w:46px;--y:44%;--x:82%"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div><div class="sw" style="--y:88%;--w:40px;--d:24s;--dl:-14s;color:#4f9cbc;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
+  <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="hang bobv puffer" style="--w:54px;--y:22px;--x:auto;--r:7%"><svg class="wig" viewBox="-4 -4 84 72"><use href="#s-puffer"/></svg></div><div class="sw rtl" style="--y:8%;--w:34px;--d:18s;--dl:-2s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:13%;--w:26px;--d:18s;--dl:-2.8s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw rtl" style="--y:5%;--w:22px;--d:18s;--dl:-3.4s;color:#f28b6b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="jelly" style="--w:46px;--y:44%;--x:82%"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div><div class="sw" style="--y:88%;--w:40px;--d:24s;--dl:-14s;color:#4f9cbc;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
   <div class="wrap">
     <h2>Cuándo</h2>
     <div class="facts">
@@ -495,7 +501,7 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
 </section>
 
 <section style="padding-top:8px">
-  <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="sw rtl" style="--y:3%;--w:86px;--d:34s;--dl:-8s;"><svg class="slow" viewBox="0 0 110 70"><use href="#s-turtle"/></svg></div><div class="hang bobv" style="--w:34px;--y:40%;--x:2%"><svg class="wig" viewBox="0 0 56 96"><use href="#s-seahorse"/></svg></div><div class="jelly" style="--w:34px;--y:66%;--x:86%;--dl:-3s"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div><div class="sw" style="--y:92%;--w:30px;--d:15s;--dl:-5s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw" style="--y:95%;--w:24px;--d:15s;--dl:-6s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
+  <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="sw rtl" style="--y:3%;--w:86px;--d:34s;--dl:-8s;"><svg class="slow" viewBox="0 0 110 70"><use href="#s-turtle"/></svg></div><div class="jelly" style="--w:34px;--y:66%;--x:86%;--dl:-3s"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div><div class="sw" style="--y:92%;--w:30px;--d:15s;--dl:-5s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw" style="--y:95%;--w:24px;--d:15s;--dl:-6s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
   <div class="wrap">
     <h2>Dónde</h2>
     <p class="muted">Sector Quebrada del Pobre, al norte de La Ligua. Toca Google Maps o Waze y tu celular te guía hasta la puerta.</p>
@@ -576,21 +582,18 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
         </div>
       </div>
       <div class="btns">
-        <button class="btn primary" id="send" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c4-1 6-4 8-8s5-7 8-8M14 4h6v6"/></svg>
+        <a class="btn primary" id="send" target="_blank" rel="noopener" href="https://wa.me/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.8 7L4 20l1.1-4A8 8 0 1 1 20 12z"/></svg>
           Lanzar la botella y confirmar
-        </button>
+        </a>
       </div>
+      <p class="hint">Se abre WhatsApp con tu confirmación lista: solo toca enviar.</p>
       <div class="sea-strip" id="seaStrip" aria-hidden="true">
         <svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path d="M0 30C100 10 200 10 300 30S500 50 600 30 800 10 900 30 1100 50 1200 30V80H0z" fill="#8fcfcf" opacity=".55"/><path d="M0 46C120 30 240 62 360 46S600 30 720 46 960 62 1080 46 1160 40 1200 44V80H0z" fill="#1d6b80" opacity=".85"/></svg>
         <span class="splash" id="splash"></span>
       </div>
       <div class="after" id="after" hidden>
         <p class="thanks" id="thanks" role="status">¡Tu botella va en camino! Ya quedaste en la lista de invitados.</p>
-        <a class="btn sea" id="wa" target="_blank" rel="noopener" href="https://wa.me/">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.8 7L4 20l1.1-4A8 8 0 1 1 20 12z"/></svg>
-          Avisar también por WhatsApp
-        </a>
         <button class="linkbtn" id="again" type="button">Cambiar mi respuesta</button>
       </div>
     </form>
@@ -720,7 +723,7 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
       ? `${hola} 🐳 Confirmo que vamos ${n === 1 ? "1 persona" : n + " personas"} al baby shower de Eduardo, el sábado 9 de enero a las 16:30. ¡Nos vemos!`
       : `${hola}. Lamentablemente no podré ir al baby shower de Eduardo, pero les mando mucho cariño 💙`;
     if (texto) msg += `\n\nMi mensaje en la botella: "${texto}"`;
-    $("wa").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
+    $("send").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
     if (nombre) nom.removeAttribute("aria-invalid");
     if (apellido) ape.removeAttribute("aria-invalid");
     if (nombre && apellido) $("nameErr").textContent = "";
@@ -764,12 +767,13 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
     return drift;
   }
 
-  $("send").addEventListener("click", async () => {
-    if (sending) return;
+  $("send").addEventListener("click", async e => {
+    if (sending) { e.preventDefault(); return; }
     const nombre = clean(nom.value), apellido = clean(ape.value);
     if (!nombre || !apellido) {
       if (!nombre) nom.setAttribute("aria-invalid", "true");
       if (!apellido) ape.setAttribute("aria-invalid", "true");
+      e.preventDefault();
       $("nameErr").textContent = "Escribe tu nombre y tu apellido para confirmar.";
       (!nombre ? nom : ape).focus();
       return;
@@ -780,11 +784,12 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
       const body = JSON.stringify({ nombre, apellido, asiste, personas: asiste === "si" ? n : 0, nota: nota.value.trim().slice(0, 300) });
       try { fetch(SHEET_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {}); } catch (err) {}
     }
-    $("send").disabled = true;
+    $("send").classList.add("busy");
     await throwBottle();
     $("send").parentElement.hidden = true;
+    document.querySelector(".hint").hidden = true;
     $("thanks").textContent = asiste === "si"
-      ? `¡Gracias, ${nombre}! Tu botella va en camino y ya quedaste en la lista de invitados.`
+      ? `¡Gracias, ${nombre}! Tu botella va en camino y ya quedaste en la lista de invitados. Si WhatsApp no se abrió, toca "Cambiar mi respuesta" y vuelve a lanzarla.`
       : `Gracias por avisarnos, ${nombre}. Tu botella con cariño ya va en camino.`;
     $("after").hidden = false;
     $("after").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
@@ -796,8 +801,9 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
     bottle.classList.remove("filled", "corked");
     paper.classList.remove("rolled");
     $("after").hidden = true;
-    $("send").disabled = false;
+    $("send").classList.remove("busy");
     $("send").parentElement.hidden = false;
+    document.querySelector(".hint").hidden = false;
     nom.focus();
   });
   update();
