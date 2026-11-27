@@ -118,6 +118,9 @@ p { margin: 0 0 14px; }
 .tag.town { left: 12px; bottom: 12px; background: rgba(12,52,70,.88); }
 .osm { position: absolute; right: 6px; bottom: 4px; font-size: 10px; color: #3f6170; background: rgba(255,255,255,.75); padding: 1px 5px; border-radius: 4px; }
 
+.toast:empty { display: none; }
+.donde { padding-top: 8px; padding-bottom: 20px; }
+.rsvp { padding-top: 28px; }
 .toast { min-height: 22px; margin-top: 10px; font-size: 15px; color: var(--sea); font-weight: 600; text-align: center; }
 
 /* confirmación */
@@ -325,6 +328,8 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
 .hj .bell { transform-box: fill-box; transform-origin: 50% 90%; animation: bellP 1.9s ease-in-out infinite; }
 .hj .tents path { transform-box: fill-box; transform-origin: 50% 0; animation: tent 2.2s ease-in-out infinite alternate; }
 .hj .tents path:nth-child(even) { animation-duration: 2.8s; animation-direction: alternate-reverse; }
+@media (max-width: 400px) { .hj { width: calc(var(--w) * .62); } .hj:nth-of-type(1) { top: 46% !important; } }
+@media (max-width: 360px) { .hero .surname { letter-spacing: .2em; } .hero .surname::before, .hero .surname::after { width: 14px; margin: 0 8px; } }
 @keyframes hjFloat { 0%,100% { transform: translate(0, 0) rotate(-3deg); } 50% { transform: translate(8px, -42px) rotate(3deg); } }
 @keyframes bellP { 0%,100% { transform: scale(1, 1); } 45% { transform: scale(1.08, .88); } }
 @keyframes tent { from { transform: skewX(-10deg); } to { transform: skewX(10deg); } }
@@ -519,7 +524,7 @@ input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 
   </div>
 </section>
 
-<section style="padding-top:8px">
+<section class="donde">
   <div class="layer" aria-hidden="true"><div class="caustic"></div><div class="sw rtl" style="--y:3%;--w:86px;--d:34s;--dl:-8s;"><svg class="slow" viewBox="0 0 110 70"><use href="#s-turtle"/></svg></div><div class="jelly" style="--w:34px;--y:66%;--x:86%;--dl:-3s"><svg class="wig" viewBox="0 0 60 90"><use href="#s-jelly"/></svg></div><div class="sw" style="--y:92%;--w:30px;--d:15s;--dl:-5s;color:#ffb15c;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div><div class="sw" style="--y:95%;--w:24px;--d:15s;--dl:-6s;color:#ffd36b;"><svg class="wig" viewBox="0 0 64 40"><use href="#s-fish"/></svg></div></div>
   <div class="wrap">
     <h2>Dónde</h2>
