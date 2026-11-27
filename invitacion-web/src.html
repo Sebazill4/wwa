@@ -268,6 +268,12 @@ h2::after { content: ""; display: block; width: 72px; height: 12px; margin-top: 
 .bottle { width: 62px; flex: none; margin-top: -10px; animation: bottle 4.6s ease-in-out infinite; transform-origin: 50% 70%; filter: drop-shadow(0 8px 10px rgba(12,52,70,.18)); }
 @keyframes bottle { 0%,100% { transform: rotate(-12deg) translateY(0); } 50% { transform: rotate(10deg) translateY(-8px); } }
 #rsvp { background: rgba(255,250,242,.75); border: 1px solid #e3d0ad; border-radius: 22px; padding: 6px 18px 20px; box-shadow: 0 10px 24px rgba(120,90,40,.08); }
+.names { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.names > div { min-width: 0; }
+@media (max-width: 360px) { .names { grid-template-columns: 1fr; } }
+input[type=text][aria-invalid=true] { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(224,109,82,.18); }
+.err { min-height: 0; margin: 6px 0 0; font-size: 14px; font-weight: 600; color: #b8492f; }
+.err:empty { display: none; }
 .saved { min-height: 20px; margin: 10px 0 0; text-align: center; font-size: 14px; color: var(--sea); font-weight: 600; }
 
 @media (max-width: 380px) { .btns.two { grid-template-columns: 1fr; } .clock b { font-size: 30px; } }
@@ -458,8 +464,13 @@ h2::after { content: ""; display: block; width: 72px; height: 12px; margin-top: 
       </svg></div>
     <p class="muted">Confirma en un minuto: se abre WhatsApp con tu mensaje listo para enviar a los papás.</p>
     <form id="rsvp" novalidate>
-      <label for="nombre">Tu nombre</label>
-      <input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Ej: Tía Carmen">
+      <div class="names">
+        <div><label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" autocomplete="given-name" placeholder="Ej: Carmen" required aria-describedby="nameErr"></div>
+        <div><label for="apellido">Apellido</label>
+        <input type="text" id="apellido" name="apellido" autocomplete="family-name" placeholder="Ej: Bolados" required aria-describedby="nameErr"></div>
+      </div>
+      <p class="err" id="nameErr" role="alert"></p>
       <label id="asistLbl">¿Vienes?</label>
       <div class="choice" role="radiogroup" aria-labelledby="asistLbl">
         <input type="radio" id="si" name="asist" value="si" checked><label for="si">Sí, ahí estaré</label>
@@ -479,6 +490,7 @@ h2::after { content: ""; display: block; width: 72px; height: 12px; margin-top: 
           Confirmar por WhatsApp
         </a>
       </div>
+      <p class="saved" id="saved" role="status"></p>
     </form>
   </div>
 </section>
@@ -603,33 +615,52 @@ h2::after { content: ""; display: block; width: 72px; height: 12px; margin-top: 
     else copy();
   });
 
-  /* ===== Confirmación por WhatsApp ===== */
+  /* ===== Confirmación: WhatsApp + lista en Google Sheets ===== */
   let n = 1;
+  const nom = $("nombre"), ape = $("apellido");
   const saved = (() => { try { return JSON.parse(localStorage.getItem("rsvp-eduardo") || "{}"); } catch (e) { return {}; } })();
-  if (saved.nombre) $("nombre").value = saved.nombre;
+  if (saved.nombre) nom.value = saved.nombre;
+  if (saved.apellido) ape.value = saved.apellido;
   if (saved.n) n = saved.n;
   if (saved.asist === "no") $("no").checked = true;
+  const clean = s => s.trim().replace(/\s+/g, " ");
   function update() {
-    const nombre = $("nombre").value.trim();
+    const nombre = clean(nom.value), apellido = clean(ape.value);
+    const quien = [nombre, apellido].filter(Boolean).join(" ");
     const asist = document.querySelector("input[name=asist]:checked").value;
     $("cuantos").textContent = n;
     $("cuantosBox").hidden = asist !== "si";
+    const hola = quien ? "Hola, soy " + quien : "Hola";
     const msg = asist === "si"
-      ? `${nombre ? "Hola, soy " + nombre : "Hola"} 🐳 Confirmo que vamos ${n === 1 ? "1 persona" : n + " personas"} al baby shower de Eduardo, el sábado 9 de enero a las 16:30. ¡Nos vemos!`
-      : `${nombre ? "Hola, soy " + nombre : "Hola"}. Lamentablemente no podré ir al baby shower de Eduardo, pero les mando mucho cariño 💙`;
+      ? `${hola} 🐳 Confirmo que vamos ${n === 1 ? "1 persona" : n + " personas"} al baby shower de Eduardo, el sábado 9 de enero a las 16:30. ¡Nos vemos!`
+      : `${hola}. Lamentablemente no podré ir al baby shower de Eduardo, pero les mando mucho cariño 💙`;
     $("wa").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
-    try { localStorage.setItem("rsvp-eduardo", JSON.stringify({ nombre, n, asist })); } catch (e) {}
+    if (nombre) nom.removeAttribute("aria-invalid");
+    if (apellido) ape.removeAttribute("aria-invalid");
+    if (nombre && apellido) $("nameErr").textContent = "";
+    try { localStorage.setItem("rsvp-eduardo", JSON.stringify({ nombre, apellido, n, asist })); } catch (e) {}
   }
   $("menos").addEventListener("click", () => { n = Math.max(1, n - 1); update(); });
   $("mas").addEventListener("click", () => { n = Math.min(12, n + 1); update(); });
-  $("nombre").addEventListener("input", update);
+  nom.addEventListener("input", update);
+  ape.addEventListener("input", update);
   document.querySelectorAll("input[name=asist]").forEach(r => r.addEventListener("change", update));
   $("rsvp").addEventListener("submit", e => e.preventDefault());
-  $("wa").addEventListener("click", () => {
+  $("wa").addEventListener("click", e => {
+    const nombre = clean(nom.value), apellido = clean(ape.value);
+    if (!nombre || !apellido) {
+      e.preventDefault();
+      if (!nombre) nom.setAttribute("aria-invalid", "true");
+      if (!apellido) ape.setAttribute("aria-invalid", "true");
+      $("nameErr").textContent = "Escribe tu nombre y tu apellido para confirmar.";
+      (!nombre ? nom : ape).focus();
+      return;
+    }
     if (!SHEET_URL) return;
     const asiste = document.querySelector("input[name=asist]:checked").value;
-    const body = JSON.stringify({ nombre: $("nombre").value.trim(), asiste, personas: asiste === "si" ? n : 0 });
-    try { fetch(SHEET_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {}); } catch (e) {}
+    const body = JSON.stringify({ nombre, apellido, asiste, personas: asiste === "si" ? n : 0 });
+    try { fetch(SHEET_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {}); } catch (err) {}
+    $("saved").textContent = "¡Gracias! Tu respuesta quedó anotada en la lista de invitados.";
   });
   update();
 
